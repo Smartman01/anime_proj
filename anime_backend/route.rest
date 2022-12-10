@@ -3,3 +3,7 @@ GET http://localhost:3005/animeWordle/searchcharacter/L
 ###
 
 GET http://localhost:3005/animeWordle/guesscharacter/Edward
+
+###
+
+GET https://animewordle.herokuapp.com/searchanime/bleach
