@@ -58,7 +58,17 @@ router.get('/searchanime/:name', async (req, res) =>
 // check anime guess
 router.get('/guessanime/:name', async (req, res) =>
 {
-    res.send(req.params.name)
+    try
+    {
+        const dayindex = await DayIndex.find()
+        const anime = await Anime.find()
+
+        res.json({ guessCorrect: req.params.name === anime[dayindex[0].index_anime].name })
+    }
+    catch (err)
+    {
+        res.status(500).json({ messsage: err.messsage })
+    }
 })
 
 router.get('/oftheday/:category', async (req, res) =>
