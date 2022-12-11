@@ -75,9 +75,9 @@ router.get('/oftheday/:category', async (req, res) =>
         {
             const anime = await Anime.find()
 
-            console.log(anime[0])
+            console.log(anime[dayindex[0].index_anime])
             
-            res.json({ characteristics: anime[0].characteristics })
+            res.json({ characteristics: anime[dayindex[0].index_anime].characteristics })
         }
         else
         {
