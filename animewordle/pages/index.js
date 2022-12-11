@@ -20,6 +20,15 @@ export default function Home() {
   {
     setSearch(text);
 
+    if (text.length > 0)
+    {
+      fetch(`https://animewordle.herokuapp.com/animeWordle/searchcharacter/${text}`,
+        {
+          mode: 'no-cors'
+        })
+        .then((response) => console.log(response));
+    }
+
     setResults(fuse.search(text))
   }
 
