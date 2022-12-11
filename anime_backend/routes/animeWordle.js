@@ -30,8 +30,9 @@ router.get('/guesscharacter/:name', async (req, res) =>
     try
     {
         const dayindex = await DayIndex.find()
-
-        console.log(dayindex);
+        const character = await Character.find()[dayindex[0].index_character]
+        
+        res.json({ guessCorrect: req.params.name === character.name })
     }
     catch (err)
     {
@@ -58,6 +59,31 @@ router.get('/searchanime/:name', async (req, res) =>
 router.get('/guessanime/:name', async (req, res) =>
 {
     res.send(req.params.name)
+})
+
+router.get('/oftheday/:category', async (req, res) =>
+{
+    try
+    {
+        const dayindex = await DayIndex.find()
+
+        if (req.params.category === "anime")
+        {
+            const anime = await Anime.find()[dayindex[0].index_anime]
+            
+            res.json({ characteristics: anime.characteristics })
+        }
+        else
+        {
+            const character = await Character.find()[dayindex[0].index_character]
+            
+            res.json({ characteristics: character.characteristics })
+        }
+    }
+    catch (err)
+    {
+        res.status(500).json({ messsage: err.messsage })
+    }
 })
 
 module.exports = router
