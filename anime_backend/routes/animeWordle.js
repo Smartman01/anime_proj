@@ -31,12 +31,8 @@ router.get('/guesscharacter/:name', async (req, res) =>
     {
         const dayindex = await DayIndex.find()
         const character = await Character.find()
-        let res = req.params.name === character[dayindex[0].index_character].name
-        
-        console.log(character[dayindex[0].index_character].name)
-        console.log(res)
 
-        res.json({ res })
+        res.json({ guessCorrect: req.params.name === character[dayindex[0].index_character].name })
     }
     catch (err)
     {
