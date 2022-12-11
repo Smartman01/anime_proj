@@ -5,6 +5,7 @@ const Fuse = require('fuse.js')
 
 const Character = require('../models/character')
 const Anime = require('../models/anime')
+const DayIndex = require('../models/dayindex')
 
 const options = { keys : [ "name" ], threshold: 0.4 };
 
@@ -26,7 +27,16 @@ router.get('/searchcharacter/:name', async (req, res) =>
 // check character guess
 router.get('/guesscharacter/:name', async (req, res) =>
 {
-    res.send(req.params.name)
+    try
+    {
+        const dayindex = await DayIndex.find()
+
+        console.log(dayindex);
+    }
+    catch (err)
+    {
+        res.status(500).json({ messsage: err.messsage })
+    }
 })
 
 // check anime search

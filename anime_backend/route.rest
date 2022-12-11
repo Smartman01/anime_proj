@@ -6,4 +6,4 @@ GET http://localhost:3005/animeWordle/guesscharacter/Edward
 
 ###
 
-GET https://animewordle.herokuapp.com/
+GET https://animewordle.herokuapp.com/animeWordle/searchanime/bl
