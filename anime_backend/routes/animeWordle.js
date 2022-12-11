@@ -31,8 +31,8 @@ router.get('/guesscharacter/:name', async (req, res) =>
     {
         const dayindex = await DayIndex.find()
         const character = await Character.find()[dayindex[0].index_character]
-        
-        res.json({ guessCorrect: req.params.name === character.name })
+        let res = req.params.name === character.name
+        res.json({ guessCorrect: res })
     }
     catch (err)
     {
@@ -65,17 +65,23 @@ router.get('/oftheday/:category', async (req, res) =>
 {
     try
     {
+        console.log(req.params.category)
+
         const dayindex = await DayIndex.find()
 
         if (req.params.category === "anime")
         {
             const anime = await Anime.find()[dayindex[0].index_anime]
+
+            console.log(anime)
             
             res.json({ characteristics: anime.characteristics })
         }
         else
         {
             const character = await Character.find()[dayindex[0].index_character]
+
+            console.log(character)
             
             res.json({ characteristics: character.characteristics })
         }
