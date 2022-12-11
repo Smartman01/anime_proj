@@ -1,13 +1,12 @@
-const { Int32 } = require('mongodb')
 const mongoose = require('mongoose')
 
 const dayIndexSchema = new mongoose.Schema({
     index_anime: {
-        type: Int32,
+        type: Number,
         required: true
     },
     index_character: {
-        type: Int32,
+        type: Number,
         required: false
     }
 })
