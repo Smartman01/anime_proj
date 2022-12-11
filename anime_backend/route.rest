@@ -10,7 +10,7 @@ GET https://animewordle.herokuapp.com/animeWordle/searchanime/bl
 
 ###
 
-GET https://animewordle.herokuapp.com/animeWordle/guesscharacter/L
+GET https://animewordle.herokuapp.com/animeWordle/guesscharacter/Edward
 
 ###
 
