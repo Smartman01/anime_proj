@@ -22,4 +22,4 @@ GET https://animewordle.herokuapp.com/animeWordle/guesscharacter/L
 
 ###
 
-GET https://animewordle.herokuapp.com/animeWordle/oftheday/anime
+GET https://animewordle.herokuapp.com/animeWordle/oftheday/character
