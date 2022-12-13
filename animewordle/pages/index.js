@@ -6,6 +6,7 @@ import useSWR from 'swr'
 import colors from '../styles/colors.json'
 import Popup from '../components/popup'
 import Help from '../components/help'
+import Gameend from '../components/gameend'
 
 const fetcher = async (...args) => await fetch(...args).then((res) => res.json())
 
@@ -105,8 +106,7 @@ export default function Home() {
               </>
             // game win/lose
             :
-              <>
-              </>
+              <Gameend />
           }
         </Popup>
       </div>

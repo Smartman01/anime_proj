@@ -32,7 +32,12 @@ router.get('/guesscharacter/:name', async (req, res) =>
         const dayindex = await DayIndex.find()
         const character = await Character.find()
 
-        res.json({ guessCorrect: req.params.name === character[dayindex[0].index_character].name })
+        const isCorrect = req.params.name === character[dayindex[0].index_character].name;
+
+        res.json({ 
+            guessCorrect: isCorrect,
+            character: isCorrect ? character[dayindex[0].index_character] : null
+        })
     }
     catch (err)
     {

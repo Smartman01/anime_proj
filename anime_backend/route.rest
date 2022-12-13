@@ -2,11 +2,11 @@ GET http://localhost:3005/animeWordle/searchcharacter/L
 
 ###
 
-GET http://localhost:3005/animeWordle/guesscharacter/Edward
+GET http://localhost:3005/animeWordle/guesscharacter/Edward%20ELRIC
 
 ###
 
-GET https://animewordle.herokuapp.com/animeWordle/searchanime/bl
+GET https://animewordle.herokuapp.com/animeWordle/guesscharacter/Edward%20ELRIC
 
 ###
 
