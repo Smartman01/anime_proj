@@ -1,7 +1,3 @@
-PUT http://localhost:3005/animeWordle/update
-
-###
-
 GET http://localhost:3005/animeWordle/searchcharacter/L
 
 ###
