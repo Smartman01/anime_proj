@@ -12,7 +12,7 @@ const fetcher = async (...args) => await fetch(...args).then((res) => res.json()
 
 export default function Home() {
   const [guess, setGuess] = useState(0);
-  const [correct, setCorrect] = useState(false);
+  const [winlose, setWinLose] = useState(false);
   const [runOnce, setRunOnce] = useState(true);
   const [results, setResults] = useState([]);
   const [focused, setFocus] = useState(false);
@@ -43,15 +43,14 @@ export default function Home() {
 
     let res = await fetch(`https://animewordle.herokuapp.com/animeWordle/guesscharacter/${name}`)
     .then((response) => response.json())
-    .then((data) => {return data.guessCorrect});
+    .then((data) => {return data});
 
     
-    if (res)
+    if (res.guessCorrect)
     {
-      console.log("Correct");
-      setCorrect(res)
-      
+      setWinLose(res)
       // show popup (user won and correct character with info)
+      setPopup({show: true, title: "Guessed Correct!"})
     }
     else if (!wrongGuesses.includes(name))
     {
@@ -105,8 +104,9 @@ export default function Home() {
               <>
               </>
             // game win/lose
-            :
-              <Gameend />
+            : popup.title.includes("Guessed") ?
+              <Gameend winlose={winlose} />
+            : null
           }
         </Popup>
       </div>

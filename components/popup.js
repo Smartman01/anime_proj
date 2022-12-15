@@ -12,7 +12,7 @@ const Popup = ({title, close, children}) => {
             <h1 style={{textTransform: 'uppercase'}}>{title}</h1>
             {children}
             <button className={styles.card}
-                style={{backgroundColor: 'transparent', fontWeight: 'bold', border: '2px solid red'}}
+                style={{backgroundColor: 'transparent', fontWeight: 'bold', border: `2px solid ${title.includes("Correct") ? 'lime' : 'red'}`}}
                 onClick={() => close()}
             >
                 CLOSE
