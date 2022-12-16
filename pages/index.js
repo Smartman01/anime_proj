@@ -41,10 +41,9 @@ export default function Home() {
 
     if (guess >= 4) return;
 
-    let res = await fetch(`https://animewordle.herokuapp.com/animeWordle/guesscharacter/${name}`)
+    let res = await fetch(`https://animewordle.herokuapp.com/animeWordle/guesscharacter/${name}/${guess+1}`)
     .then((response) => response.json())
     .then((data) => {return data});
-
     
     if (res.guessCorrect)
     {
@@ -52,14 +51,25 @@ export default function Home() {
       // show popup (user won and correct character with info)
       setPopup({show: true, title: "Guessed Correct!"})
     }
+    else if (res.failed)
+    {
+      setWinLose(res)
+      setPopup({show: true, title: "Guessed Wrong!"})
+    }
     else if (!wrongGuesses.includes(name))
     {
       setGuess(guess + 1);
       setWrongGuesses([...wrongGuesses, name])
 
-      if (guess === 4)
+      if (guess + 1 === 4)
       {
+        console.log(guess + 1)
         // show popup (user lost and correct character with info)
+        let failed = await fetch(`https://animewordle.herokuapp.com/animeWordle/guesscharacter/${name}/${guess+1}`)
+        .then((response) => response.json())
+        .then((data) => {return data});
+
+        console.log(failed)
       }
     }
   }
