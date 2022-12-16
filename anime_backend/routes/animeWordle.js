@@ -34,13 +34,10 @@ router.get('/guesscharacter/:name/:numTries', async (req, res) =>
 
         const isCorrect = req.params.name === character[dayindex[0].index_character].name;
 
-        console.log(req.params.numTries)
-        console.log(isCorrect || parseInt(req.params.numTries) === 4)
-
         res.json({
             guessCorrect: isCorrect,
-            failed: req.params.numTries === 4,
-            character: isCorrect || req.params.numTries === 4 ? character[dayindex[0].index_character] : null
+            failed: parseInt(req.params.numTries) === 4,
+            character: isCorrect || parseInt(req.params.numTries) === 4 ? character[dayindex[0].index_character] : null
         })
     }
     catch (err)
