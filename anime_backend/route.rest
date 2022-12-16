@@ -6,7 +6,7 @@ GET http://localhost:3005/animeWordle/guesscharacter/Edward%20ELRIC
 
 ###
 
-GET https://animewordle.herokuapp.com/animeWordle/guesscharacter/Edward%20ELRIC
+GET https://animewordle.herokuapp.com/animeWordle/guesscharacter/Naruto%20UZUMAKI
 
 ###
 

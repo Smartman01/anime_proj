@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import base64
 
 URL = "https://www.anime-planet.com/characters/top-loved"
 page = requests.get(URL)
@@ -17,6 +18,9 @@ anime = results.find_all(class_="tableAnime")
 # print(charInfo[0].find_all("a"))
 # print(images[0]["alt"]) # name
 # print(images[0]["src"]) # image link
+
+def get_as_base64(url):
+    return base64.b64encode(requests.get(url).content).decode('utf-8')
 
 f = open("character_json.json", "w")
 
@@ -36,7 +40,7 @@ for i in range(len(images)):
     
     j = {
         "name" : images[i]["alt"],
-        "image" : images[i]["src"],
+        "image" : get_as_base64(images[i]["src"]),
         "characteristics" : traits_tags,
         "animes" : animes
     }

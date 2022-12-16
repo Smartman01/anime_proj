@@ -25,7 +25,7 @@ router.get('/searchcharacter/:name', async (req, res) =>
 })
 
 // check character guess
-router.get('/guesscharacter/:name', async (req, res) =>
+router.get('/guesscharacter/:name/:numTries', async (req, res) =>
 {
     try
     {
@@ -34,9 +34,10 @@ router.get('/guesscharacter/:name', async (req, res) =>
 
         const isCorrect = req.params.name === character[dayindex[0].index_character].name;
 
-        res.json({ 
+        res.json({
             guessCorrect: isCorrect,
-            character: isCorrect ? character[dayindex[0].index_character] : null
+            failed: req.params.numTries === 4,
+            character: isCorrect || req.params.numTries === 4 ? character[dayindex[0].index_character] : null
         })
     }
     catch (err)

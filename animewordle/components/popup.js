@@ -9,10 +9,10 @@ const Popup = ({title, close, children}) => {
             display: 'flex', flexDirection: 'column', justifyContent: 'start',
             alignItems: 'center', padding: 10
         }}>
-            <h1 style={{textTransform: 'uppercase'}}>{title}</h1>
+            <h1 style={{textTransform: 'uppercase', color: title.includes("Correct") ? 'lime' : 'white'}}>{title}</h1>
             {children}
             <button className={styles.card}
-                style={{backgroundColor: 'transparent', fontWeight: 'bold', border: `2px solid ${title.includes("Correct") ? 'lime' : 'red'}`}}
+                style={{backgroundColor: 'transparent', fontWeight: 'bold', border: `2px solid red`}}
                 onClick={() => close()}
             >
                 CLOSE
