@@ -12,7 +12,7 @@ const Gameend = ({winlose}) => {
             display: 'flex', flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center'
         }}>
-            <img src={"https://static.wikia.nocookie.net/shingekinokyojin/images/f/f0/Levi_Ackermann_%28Anime%29_character_image_%28850%29.png/revision/latest?cb=20210124214225"}
+            <img src={`data:image/png;base64,${winlose.character.image}`}
                 style={{
                     border: '2px solid lime', borderRadius: 10,
                 }}
@@ -36,6 +36,14 @@ const Gameend = ({winlose}) => {
                         )
                     })
                 }
+                <button className={styles.card}
+                    style={{
+                        backgroundColor: 'transparent', padding: 15,
+                        border: '2px solid lime', fontWeight: 'bold'
+                    }}
+                >
+                    more...
+                </button>
             </div>
         </div>
     );
