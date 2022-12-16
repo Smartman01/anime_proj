@@ -18,8 +18,4 @@ GET https://animewordle.herokuapp.com/animeWordle/guessanime/bleach
 
 ###
 
-GET https://animewordle.herokuapp.com/animeWordle/guesscharacter/L
-
-###
-
 GET https://animewordle.herokuapp.com/animeWordle/oftheday/character
