@@ -16,6 +16,12 @@ a {
   box-sizing: border-box;
 }
 
+input[type = "checkbox"] {
+  -webkit-appearance: none;
+  display: none;
+  visibility: hidden;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
