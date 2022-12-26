@@ -151,7 +151,7 @@ export default function Home() {
                 minWidth: minWidth ? '85%' : null, position: 'absolute',
                 display: dropdown ? 'flex' : 'none', transform: 'translate(0, 60px)',
                 zIndex: 2, flexDirection: 'column', justifyContent: 'center',
-                alignItems: 'center', borderRadius: 35,
+                alignItems: 'center', borderRadius: 10,
                 background: "linear-gradient(145deg, #9fbebe, #86a0a0)",
                 boxShadow:  "5px 5px 10px #3c4747, -5px -5px 10px #eeffff",
                 filter: `blur(${popup.show ? 50 : 0}px)`
