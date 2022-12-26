@@ -33,7 +33,7 @@ const Gameend = ({winlose, minWidth}) => {
                                 style={{
                                     border: `2px solid ${winlose.failed ? 'red' : 'lime'}`, borderRadius: 10,
                                     fontSize: 12, padding: 10, margin: 10, textAlign: 'center',
-                                    fontWeight: 'bold', alignSelf: 'center'
+                                    fontWeight: 'bold', alignSelf: 'center', backgroundColor: winlose.failed ? 'red' : 'lime', color: 'black'
                                 }}
                             >
                                 {item}
