@@ -80,6 +80,8 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./out
+      env:
+        NEXT_PUBLIC_API_LINK: ${{ secrets.NEXT_PUBLIC_API_LINK }}
 
   # Deployment job
   deploy:
