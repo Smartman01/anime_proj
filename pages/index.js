@@ -8,6 +8,7 @@ import Popup from '../components/popup'
 import Help from '../components/help'
 import Gameend from '../components/gameend'
 import useWindowSize from '../components/useWindow'
+import Feedback from '../components/feedback'
 
 const fetcher = async (...args) => await fetch(...args).then((res) => res.json())
 
@@ -123,10 +124,9 @@ export default function Home() {
                 // how
                 popup.title === "How to play" ?
                   <Help minWidth={minWidth} />
-                  // Statistics
-                : popup.title === "Statistics" ?
-                  <>
-                  </>
+                  // Feedback
+                : popup.title === "Feedback" ?
+                  <Feedback />
                 // game win/lose
                 : popup.title.includes("Guessed") ?
                     <Gameend winlose={winlose} minWidth={minWidth} guesses={guess} />
@@ -187,10 +187,10 @@ export default function Home() {
                   className={styles.menuBtn}
                   onClick={() => {
                     closeDropdown();
-                    setPopup({ show: true, title: 'Statistics' })
+                    setPopup({ show: true, title: 'Feedback' })
                   }}
                 >
-                  Statistics
+                  Feedback
                 </button>
               </div>
             </>
@@ -211,9 +211,9 @@ export default function Home() {
               </button>
               <button
                 className={styles.menuBtn}
-                onClick={() => setPopup({ show: true, title: 'Statistics' })}
+                onClick={() => setPopup({ show: true, title: 'Feedback' })}
               >
-                Statistics
+                Feedback
               </button>
             </div>
         }
