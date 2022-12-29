@@ -183,7 +183,7 @@ export default function Home() {
                 >
                   Results
                 </button>
-                <button
+                {/* <button
                   className={styles.menuBtn}
                   onClick={() => {
                     closeDropdown();
@@ -191,7 +191,7 @@ export default function Home() {
                   }}
                 >
                   Feedback
-                </button>
+                </button> */}
               </div>
             </>
             :
@@ -209,12 +209,12 @@ export default function Home() {
               >
                 Results
               </button>
-              <button
+              {/* <button
                 className={styles.menuBtn}
                 onClick={() => setPopup({ show: true, title: 'Feedback' })}
               >
                 Feedback
-              </button>
+              </button> */}
             </div>
         }
       </div>
