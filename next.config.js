@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   // distDir: 'build',
-  basePath: '/animeproj',
+  basePath: '/anime_proj',
 }
 
 module.exports = nextConfig
