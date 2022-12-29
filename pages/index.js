@@ -22,7 +22,7 @@ export default function Home() {
   const minWidth = size.width <= 600 ? '50%' : null;
   const [wrongGuesses, setWrongGuesses] = useState([]);
   const [popup, setPopup] = useState({ show: false, title: '' });
-  const { data, error } = useSWR(process.env.API_LINK, fetcher)
+  const { data, error } = useSWR(process.env.NEXT_PUBLIC_API_LINK, fetcher)
 
   useEffect(() =>
   {
