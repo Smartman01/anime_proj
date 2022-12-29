@@ -12,7 +12,7 @@ const Popup = ({title, close, children, minWidth, getDate}) =>
         <div style={{
             display: 'flex', flexDirection: 'column', justifyContent: 'start',
             alignItems: 'center', padding: 10,
-            width: minWidth !== null ? '300px' : '500px', borderRadius: 50, backgroundColor: "#212121",
+            width: minWidth !== null ? '300px' : '500px', borderRadius: 10, backgroundColor: "#212121",
             boxShadow: "15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60)"
         }}>
             <h1 style={{
@@ -23,7 +23,7 @@ const Popup = ({title, close, children, minWidth, getDate}) =>
             >
                 {title}
             </h1>
-            <h3 style={{margin: 0, marginBottom: 20}}>Next character in: {time}</h3>
+            <h3 style={{margin: 0, marginBottom: 20, display: title.includes("Guessed") ? null : 'none'}}>Next character in: {time}</h3>
             {children}
             <button className={styles.card}
                 style={{backgroundColor: 'transparent', fontWeight: 'bold', border: `2px solid red`, padding: 10}}
