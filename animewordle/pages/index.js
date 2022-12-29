@@ -12,27 +12,30 @@ import useWindowSize from '../components/useWindow'
 const fetcher = async (...args) => await fetch(...args).then((res) => res.json())
 
 export default function Home() {
+  const size = useWindowSize();
   const [guess, setGuess] = useState(0);
-  const [winlose, setWinLose] = useState(null);
   const [results, setResults] = useState([]);
   const [focused, setFocus] = useState(false);
+  const [winlose, setWinLose] = useState(null);
+  const [dropdown, setDropdown] = useState(false);
+  const minWidth = size.width <= 600 ? '50%' : null;
   const [wrongGuesses, setWrongGuesses] = useState([]);
   const [popup, setPopup] = useState({ show: false, title: '' });
-  const [dropdown, setDropdown] = useState(false);
-  const size = useWindowSize();
-  const minWidth = size.width <= 600 ? '50%' : null;
-
   const { data, error } = useSWR('https://animewordle.herokuapp.com/animeWordle/oftheday/character', fetcher)
 
   useEffect(() =>
   {
-    if (typeof window !== "undefined" && localStorage.getItem('character') !== null)
+    if (typeof window !== "undefined")
     {
-      let character = JSON.parse(localStorage.getItem('character'))
+      let character = JSON.parse(localStorage.getItem('character'));
+      let wrong = JSON.parse(localStorage.getItem('wrongGuesses'))
 
-      if (Date.parse(character.expiration) > Date.parse(new Date()))
+      if (character !== null && Date.parse(character.expiration) > Date.parse(new Date()))
       {
         setWinLose(character.result);
+        setGuess(parseInt(character.guesses));
+        if (wrong !== null) setWrongGuesses(wrong);
+        setPopup({ show: true, title: `Guessed ${character.result.guessCorrect ? 'Correct!' : 'Wrong!'}` })
       }
     }
   }, [])
@@ -58,14 +61,14 @@ export default function Home() {
       .then((data) => { return data });
       
     setGuess(guess + 1);
-
+    
     if (res.guessCorrect || res.failed) {
       setWinLose(res)
       // show popup (user won and correct character with info)
       setPopup({ show: true, title: res.guessCorrect ? "Guessed Correct!" : "Guessed Wrong!" })
-
+      
       var dateFuture = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
-      let character = { result: res , expiration: dateFuture }
+      let character = { result: res, guesses: guess + 1, expiration: dateFuture }
 
       localStorage.setItem('character', JSON.stringify(character))
 
@@ -73,8 +76,7 @@ export default function Home() {
     }
 
     setWrongGuesses([...wrongGuesses, name])
-
-    // localStorage.setItem("wrongGuesses", JSON.stringify([...wrongGuesses, name]))
+    localStorage.setItem("wrongGuesses", JSON.stringify([...wrongGuesses, name]))
   }
 
   const getNextDay = () => {
@@ -91,6 +93,12 @@ export default function Home() {
     seconds = seconds - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
 
     return `${('0' + hours).slice(-2)}:${('0' + minutes).slice(-2)}:${('0' + seconds).slice(-2)}`;
+  }
+
+  const closeDropdown = () =>
+  {
+    setDropdown(false);
+    document.getElementById("check").checked = false;
   }
 
   return (
@@ -121,7 +129,7 @@ export default function Home() {
                   </>
                 // game win/lose
                 : popup.title.includes("Guessed") ?
-                    <Gameend winlose={winlose} minWidth={minWidth} />
+                    <Gameend winlose={winlose} minWidth={minWidth} guesses={guess} />
                 : null
               }
             </Popup>
@@ -131,11 +139,11 @@ export default function Home() {
 
       <div className={styles.header}
         style={{
-          display: 'flex', zIndex: 2, maxWidth: '100%', backgroundColor: 'gray',
+          display: 'flex', zIndex: 2, maxWidth: '100%',
           padding: 10, justifyContent: minWidth ? 'space-evenly' : null,
         }}
       >
-        <h1 className={styles.title} style={{ fontSize: '35px', alignSelf: 'center', textAlign: 'center', color: 'black' }}>
+        <h1 className={styles.title} style={{ fontSize: '35px', alignSelf: 'center', textAlign: 'center', color: 'white' }}>
           WEEBDLE
         </h1>
         {
@@ -152,84 +160,58 @@ export default function Home() {
                 display: dropdown ? 'flex' : 'none', transform: 'translate(0, 60px)',
                 zIndex: 2, flexDirection: 'column', justifyContent: 'center',
                 alignItems: 'center', borderRadius: 10,
-                background: "linear-gradient(145deg, #9fbebe, #86a0a0)",
-                boxShadow:  "5px 5px 10px #3c4747, -5px -5px 10px #eeffff",
+                background: "#383838", fontWeight: 'bold',
+                boxShadow:  "10px 10px 20px #2d2d2d, -10px -10px 20px #434343",
                 filter: `blur(${popup.show ? 50 : 0}px)`
               }}>
-                <p onClick={() => {
-                  // setDropdown(false)
-                  setPopup({ show: true, title: 'How to play' })
-                }}
-                  style={{
-                    backgroundColor: 'transparent', cursor: 'pointer',
-                    minWidth: '140px', textAlign: 'center', fontSize: 15,
-                    padding: 10, margin: 10
+                <button
+                  className={styles.menuBtn}
+                  onClick={() => {
+                    closeDropdown();
+                    setPopup({ show: true, title: 'How to play' })
                   }}
                 >
                   How to play
-                </p>
-                <p onClick={() => {
-                  // setDropdown(false)
-                  setPopup({ show: true, title: `Guessed ${winlose.guessCorrect ? 'Correct!' : 'Wrong!'}` })
-                }}
-                  style={{
-                    backgroundColor: 'transparent', cursor: 'pointer',
-                    minWidth: '140px', textAlign: 'center', fontSize: 15,
-                    padding: 15, display: winlose ? null : 'none'
+                </button>
+                <button 
+                  className={styles.menuBtn}
+                  style={{ display: winlose ? null : 'none' }}
+                  onClick={() => {
+                    closeDropdown();
+                    setPopup({ show: true, title: `Guessed ${winlose.guessCorrect ? 'Correct!' : 'Wrong!'}` })
                   }}
                 >
                   Results
-                </p>
-                <p onClick={() => {
-                  // setDropdown(false)
-                  setPopup({ show: true, title: 'Statistics' })
-                }}
-                  style={{
-                    backgroundColor: 'transparent', cursor: 'pointer',
-                    minWidth: '140px', textAlign: 'center', fontSize: 15,
-                    padding: 15
+                </button>
+                <button
+                  className={styles.menuBtn}
+                  onClick={() => {
+                    closeDropdown();
+                    setPopup({ show: true, title: 'Statistics' })
                   }}
                 >
                   Statistics
-                </p>
+                </button>
               </div>
             </>
             :
-            <div style={{ marginLeft: 20 }}>
+            <div style={{ marginLeft: 10 }}>
               <button
+                className={styles.menuBtn}
                 onClick={() => setPopup({ show: true, title: 'How to play' })}
-                style={{
-                  cursor: 'pointer', height: 50, border: '0px solid transparent',
-                  minWidth: '140px', textAlign: 'center', fontSize: 15,
-                  padding: 5, borderRadius: 10, margin: '1rem',
-                  background: 'linear-gradient(145deg, #c1e6e6, #e5ffff)',
-                  boxShadow: '8px 8px 16px #566666, -8px -8px 16px #ffffff'
-                }}
               >
                 How to play
               </button>
               <button
+                className={styles.menuBtn}
+                style={{ display: winlose ? null : 'none' }}
                 onClick={() => setPopup({ show: true, title: `Guessed ${winlose.guessCorrect ? 'Correct!' : 'Wrong!'}` })}
-                style={{
-                  cursor: 'pointer', height: 50, border: '0px solid transparent',
-                  minWidth: '140px', textAlign: 'center', fontSize: 15,
-                  padding: 5, borderRadius: 10, margin: '1rem',
-                  background: 'linear-gradient(145deg, #c1e6e6, #e5ffff)',
-                  boxShadow: '8px 8px 16px #566666, -8px -8px 16px #ffffff',
-                  display: winlose ? null : 'none'
-                }}
               >
                 Results
               </button>
               <button
+                className={styles.menuBtn}
                 onClick={() => setPopup({ show: true, title: 'Statistics' })}
-                style={{
-                  cursor: 'pointer', height: 50, border: '0px solid transparent',
-                  minWidth: '140px', textAlign: 'center', fontSize: 15,
-                  padding: 5, borderRadius: 10, margin: '1rem',
-                  background: 'linear-gradient(145deg, #c1e6e6, #e5ffff)',
-                  boxShadow: '8px 8px 16px #566666, -8px -8px 16px #ffffff'
-                }}
               >
                 Statistics
               </button>
@@ -239,16 +221,16 @@ export default function Home() {
 
       <main className={styles.main} style={{ filter: `blur(${popup.show ? 50 : 0}px)`, paddingRight: 10, paddingLeft: 10 }}>
         <div className={styles.description}>
-          <p className={styles.findChar} style={{ padding: 10, marginTop: 0, color: 'black' }}>
+          <p className={styles.findChar} style={{ padding: 10, marginTop: 0, color: 'white' }}>
             Find the character of the day who fits these characteristics
           </p>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 40 }}>
-          <p style={{ marginTop: 0, color: 'red', fontWeight: 'bold', fontSize: 20, textAlign: 'center', textTransform: 'uppercase' }}>Guess {guess} of 4</p>
+          <h2 style={{ marginTop: 0, color: 'red', fontWeight: 'bold', textAlign: 'center' }}>Guess {guess} of 4</h2>
           <input id='search_anime' type="text" onChange={(e) => handleChange(e.target.value)}
             className={styles.input} onFocus={() => setFocus(true)}
-            style={{ minWidth: minWidth, color: 'black' }}
+            style={{ minWidth: minWidth, color: 'white' }}
             placeholder='Type character name here!'
           />
           {
@@ -301,7 +283,7 @@ export default function Home() {
           display: 'flex', flexDirection: 'column', fontWeight: 'bold',
           paddingRight: 5, paddingLeft: 5, minWidth: minWidth
         }}>
-          <p style={{ textAlign: 'center', fontSize: 25 }}>Characteristics</p>
+          <p style={{ textAlign: 'center', fontSize: 25, color: 'white' }}>Characteristics</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
             {
               data?.characteristics.map((item, index) => {

@@ -1,15 +1,12 @@
 import Image from 'next/image'
 import { useState } from 'react';
 import styles from '../styles/Home.module.css'
+import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton } from "react-share"
 
-const imageLoader = ({ src }) =>
-{
-    return src;
-}
-
-const Gameend = ({winlose, minWidth}) => {
-
+const Gameend = ({winlose, minWidth, guesses}) => {
     const [len, setLen] = useState(3);
+    const url = window.location.href;
+    const title = `Guessed ${winlose.character.name} in ${guesses} ${guesses > 1 ? "tries" : 'try'}`;
 
     return (
         <div style={{
@@ -23,7 +20,21 @@ const Gameend = ({winlose, minWidth}) => {
                 }}
             />
             <h2>{winlose.character.name}</h2>
-            {/* <h3 style={{textTransform: 'uppercase', margin: 0}}>Anime they are in</h3> */}
+            <div style={{display: 'flex', margin: 5, marginBottom: 10}}>
+                <TwitterShareButton
+                    url={url}
+                    title={title}
+                    style={{marginRight: 10}}
+                >
+                    <TwitterIcon size={32} round />
+                </TwitterShareButton>
+                <FacebookShareButton
+                    url={url}
+                    title={title}
+                >
+                    <FacebookIcon size={32} round />
+                </FacebookShareButton>
+            </div>
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', maxWidth: 250, maxHeight: 150, overflow: 'auto'}}>
                 {
                     winlose.character.animes.slice(0, len).map((item, index) =>
@@ -33,7 +44,8 @@ const Gameend = ({winlose, minWidth}) => {
                                 style={{
                                     border: `2px solid ${winlose.failed ? 'red' : 'lime'}`, borderRadius: 10,
                                     fontSize: 12, padding: 10, margin: 10, textAlign: 'center',
-                                    fontWeight: 'bold', alignSelf: 'center', backgroundColor: winlose.failed ? 'red' : 'lime', color: 'black'
+                                    fontWeight: 'bold', alignSelf: 'center', backgroundColor: winlose.failed ? 'red' : 'lime',
+                                    color: winlose.failed ? 'white' : 'black'
                                 }}
                             >
                                 {item}
