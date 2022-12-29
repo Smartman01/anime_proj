@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd ./anime_backend && node server.js"
+    "start": "cd ./anime_backend && node server.js",
+    "deploy": "touch animewordle/.nojekyll && git add animewordle/ && git commit -m \"Deploy\" && git subtree push --prefix animewordle origin gh-pages"
   },
   "repository": {
     "type": "git",
