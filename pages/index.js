@@ -53,6 +53,8 @@ export default function Home() {
   }
 
   const checkGuess = async (name) => {
+    // JSON.stringify(data.characteristics) === JSON.stringify(character.characteristics)
+
     setFocus(false);
 
     if (winlose !== null && (winlose.failed || winlose.guessCorrect)) return;
@@ -101,6 +103,9 @@ export default function Home() {
     setDropdown(false);
     document.getElementById("check").checked = false;
   }
+
+  // 🅆🄴🄴🄱🄳🄻🄴
+  // 🆆🅴🅴🅱🅳🅻🅴
 
   return (
     <div className={styles.container}>
